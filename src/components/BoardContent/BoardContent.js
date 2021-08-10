@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './BoardContent.scss'
 import Column from 'components/Column/Column'
 import { isEmpty } from 'lodash'
@@ -11,6 +11,9 @@ import { applyDrag } from 'utils/dragDrop'
 function BoardContent() {
   const [board, setBoard] = useState({})
   const [columns, setColumns] = useState([])
+  const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
+  const newColumnInputRef = useRef()
+  const [newColumnTitle, setNewColumnTitle] = useState('')
 
   useEffect(() => {
     const boardFromDB = initialData.boards.find(
@@ -29,6 +32,13 @@ function BoardContent() {
     }
   }, [])
 
+  useEffect(() => {
+    if (newColumnInputRef && newColumnInputRef.current) {
+      newColumnInputRef.current.focus()
+      newColumnInputRef.current.select()
+    }
+  }, [openNewColumnForm])
+
   if (isEmpty(board)) {
     return (
       <div className="not-found" style={{ padding: '10px', color: 'white' }}>
@@ -44,7 +54,6 @@ function BoardContent() {
     let newBoard = { ...board }
     newBoard.columnOrder = newColumns.map((c) => c.id)
     newBoard.columns = newColumns
-    console.log(newBoard)
 
     setColumns(newColumns)
     setBoard(newBoard)
@@ -59,6 +68,41 @@ function BoardContent() {
 
       setColumns(newColumns)
     }
+  }
+
+  const toggleOpenNewColumnForm = () => {
+    setOpenNewColumnForm(!openNewColumnForm)
+  }
+
+  const addNewColumn = () => {
+    if (!newColumnTitle) {
+      newColumnInputRef.current.focus()
+      return
+    }
+
+    const newColumnToAdd = {
+      id: Math.random().toString(36).substr(2, 5),
+      boardId: board.id,
+      title: newColumnTitle.trim(),
+      cardOrder: [],
+      cards: []
+    }
+
+    let newColumns = [...columns]
+    newColumns.push(newColumnToAdd)
+
+    let newBoard = { ...board }
+    newBoard.columnOrder = newColumns.map((c) => c.id)
+    newBoard.columns = newColumns
+
+    setColumns(newColumns)
+    setBoard(newBoard)
+    setNewColumnTitle('')
+    toggleOpenNewColumnForm()
+  }
+
+  const onNewColumnTitleChange = (e) => {
+    setNewColumnTitle(e.target.value)
   }
 
   return (
@@ -79,9 +123,34 @@ function BoardContent() {
             <Column column={column} onCardDrop={onCardDrop} />
           </Draggable>
         ))}
-        <div className="add-new-column">
-          <i className="fa fa-plus icon" />
-          Add another column
+        <div className="action-container">
+          {!openNewColumnForm ? (
+            <div className="add-new-column" onClick={toggleOpenNewColumnForm}>
+              <i className="fa fa-plus icon" />
+              Add another column
+            </div>
+          ) : (
+            <div className="enter-new-column">
+              <input
+                type="text"
+                placeholder="Enter column title..."
+                className="input-enter-new-column"
+                ref={newColumnInputRef}
+                value={newColumnTitle}
+                onChange={onNewColumnTitleChange}
+                onKeyDown={(e) => e.key === 'Enter' && addNewColumn()}
+              />
+              <button className="add-column-btn" onClick={addNewColumn}>
+                Add column
+              </button>
+              <span
+                className="cancel-new-column"
+                onClick={toggleOpenNewColumnForm}
+              >
+                <i className="fa fa-trash icon"></i>
+              </span>
+            </div>
+          )}
         </div>
       </Container>
     </div>

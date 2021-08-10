@@ -31,12 +31,68 @@
     cursor: pointer;
     color: white;
     margin-left: $gap;
+    margin-right: $gap;
     font-size: 15px;
     background-color: hsla(0, 0, 100%, 0.24);
     border-radius: $column-border-radius;
 
     &:hover {
       background-color: hsla(0, 0, 100%, 0.34);
+    }
+  }
+
+  .enter-new-column {
+    width: 250px;
+    max-width: 250px;
+    background-color: $column-bg-color;
+    line-height: 32px;
+    padding: 4px 5px 4px 10px;
+    margin-left: $gap;
+    margin-right: $gap;
+    border-radius: $column-border-radius;
+  }
+
+  .input-enter-new-column {
+    padding: 8px 10px;
+    width: 225px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 5px 0;
+
+    &:focus {
+      outline: none;
+      border: 1px solid #0079bf;
+    }
+  }
+  .add-column-btn {
+    padding: 6px 15px;
+    background-color: #34a853;
+    color: white;
+    outline: none;
+    border: 0;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s linear;
+
+    &:hover {
+      background-color: rgba(#34a853, 0.7);
+    }
+    &:active {
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 4px;
+    }
+  }
+
+  .cancel-new-column {
+    margin-left: $gap;
+    cursor: pointer;
+    i {
+      font-size: 16px;
+      color: $alert-danger;
+      transition: color 0.2s linear;
+      &:hover {
+        color: darken($alert-danger, 10);
+      }
     }
   }
 }
