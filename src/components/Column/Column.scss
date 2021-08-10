@@ -14,7 +14,7 @@ $column-height: calc(#{$board-content-height} - 2 * #{$gap});
     padding: 0 8px;
   }
   header.column-drag-handle {
-    padding-left: 15px;
+    padding: 4px 8px;
     height: $column-header-height;
     font-size: 16px;
     line-height: $column-header-height;
@@ -22,6 +22,68 @@ $column-height: calc(#{$board-content-height} - 2 * #{$gap});
     border-top-left-radius: $column-border-radius;
     border-top-right-radius: $column-border-radius;
     cursor: pointer;
+    display: flex;
+
+    .column-title {
+      flex: 90%;
+
+      .trello-content-editable {
+        padding: 5px 10px;
+        font-size: inherit;
+        width: 100%;
+        height: 100%;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        background-color: inherit;
+        font-weight: inherit;
+        cursor: pointer;
+
+        &:focus {
+          outline: none;
+          border: 1px solid #0079bf;
+          background-color: white;
+        }
+      }
+    }
+    .column-dropdown-actions {
+      flex: 10%;
+
+      .dropdown-btn {
+        padding: 0 10px;
+        font-size: 16px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        background-color: $column-bg-color;
+        color: $app-main-text-color;
+        border-color: $column-bg-color;
+
+        &::after {
+          content: '...';
+          border: none;
+        }
+
+        &:focus {
+          outline: none;
+          box-shadow: none;
+        }
+
+        &:hover {
+          background-color: darken($column-bg-color, 10);
+          border-color: darken($column-bg-color, 10);
+        }
+      }
+      .dropdown-menu {
+        padding: 0;
+        min-width: 200px;
+        a.dropdown-item {
+          padding: 0.1rem 1rem;
+          font-size: 14px;
+          &:not(:last-child) {
+            border-bottom: 1px solid darken($column-bg-color, 10);
+          }
+        }
+      }
+    }
   }
 
   footer {
