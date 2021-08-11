@@ -105,7 +105,7 @@ function BoardContent() {
     setNewColumnTitle(e.target.value)
   }
 
-  const onUpdateColum = (newColumnToUpdate) => {
+  const onUpdateColumn = (newColumnToUpdate) => {
     const columnIdToUpdate = newColumnToUpdate.id
 
     let newColumns = [...columns]
@@ -147,7 +147,7 @@ function BoardContent() {
             <Column
               column={column}
               onCardDrop={onCardDrop}
-              onUpdateColum={onUpdateColum}
+              onUpdateColumn={onUpdateColumn}
             />
           </Draggable>
         ))}

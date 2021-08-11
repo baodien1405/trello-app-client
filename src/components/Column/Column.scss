@@ -86,8 +86,58 @@ $column-height: calc(#{$board-content-height} - 2 * #{$gap});
     }
   }
 
+  .add-new-card-area {
+    .textarea-enter-new-card {
+      padding: 2px 10px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: none;
+      min-height: 54px;
+      max-height: 162px;
+
+      &:focus {
+        outline: none;
+        border: 1px solid $input-bg-color;
+      }
+    }
+  }
+
+  .add-card-btn {
+    padding: 0px 15px;
+    background-color: #34a853;
+    color: white;
+    outline: none;
+    border: 0;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s linear;
+
+    &:hover {
+      background-color: rgba(#34a853, 0.7);
+    }
+    &:active {
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 4px;
+    }
+  }
+
+  .input-enter-new-card {
+    padding: 2px 10px;
+    width: 225px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 5px 0;
+
+    &:focus {
+      outline: none;
+      border: 1px solid $input-bg-color;
+    }
+  }
+
   footer {
     padding-left: 10px;
+    padding-bottom: 40px;
     height: $column-footer-height;
     font-size: 14px;
     line-height: $column-footer-height;
